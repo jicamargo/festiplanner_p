@@ -1,11 +1,11 @@
-#!/usr/bin/env ruby.exe
+#!/usr/bin/env ruby
 require "fileutils"
 
 # path to your application root.
 APP_ROOT = File.expand_path("..", __dir__)
 
 def system!(*args)
-  system(*args, exception: true)
+  system(*args) || abort("\n== Command #{args} failed ==")
 end
 
 FileUtils.chdir APP_ROOT do
@@ -17,8 +17,7 @@ FileUtils.chdir APP_ROOT do
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 
-  # Install JavaScript dependencies
-  system("yarn check --check-files") || system!("yarn install")
+  system("yarn install")
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
