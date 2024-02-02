@@ -22,7 +22,7 @@ gem "simple_form-tailwind"
 gem "stimulus-rails"
 gem "table_print"
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data" #, platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   gem "cypress-rails"
