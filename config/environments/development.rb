@@ -1,11 +1,3 @@
-#---
-# Excerpted from "Modern Front-End Development for Rails, Second Edition",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit https://pragprog.com/titles/nrclient2 for more book information.
-#---
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -75,4 +67,5 @@ Rails.application.configure do
 
   # devise
   config.action_mailer.default_url_options = {host: "localhost", port: 3000}
+
 end
