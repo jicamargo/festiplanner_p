@@ -1,11 +1,3 @@
-#---
-# Excerpted from "Modern Front-End Development for Rails, Second Edition",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit https://pragprog.com/titles/nrclient2 for more book information.
-#---
 # == Schema Information
 #
 # Table name: concerts
@@ -31,6 +23,8 @@ class Concert < ApplicationRecord
 
   has_many :bands, through: :gigs
   has_many :tickets, dependent: :destroy
+
+  validates :name, presence: true
 
   enum ilk: {concert: "concert", meet_n_greet: "meet_n_greet", battle: "battle"}
   enum access: {general: "general", members: "members", vips: "vips"}

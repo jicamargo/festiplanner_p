@@ -1,11 +1,3 @@
-#---
-# Excerpted from "Modern Front-End Development for Rails, Second Edition",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit https://pragprog.com/titles/nrclient2 for more book information.
-#---
 class ConcertsController < ApplicationController
   before_action :set_concert, only: %i[show edit update destroy]
 
@@ -16,6 +8,9 @@ class ConcertsController < ApplicationController
 
   # GET /concerts/1 or /concerts/1.json
   def show
+    if params[:inline]
+      render(@concert)
+    end
   end
 
   # GET /concerts/new
@@ -46,11 +41,16 @@ class ConcertsController < ApplicationController
   def update
     respond_to do |format|
       if @concert.update(concert_params)
-        format.html { redirect_to @concert, notice: "Concert was successfully updated." }
+        format.html { render(@concert) }
         format.json { render :show, status: :ok, location: @concert }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @concert.errors, status: :unprocessable_entity }
+        format.html { render(:edit) }
+        format.json {
+          render(
+            json: @concert.errors,
+            status: :unprocessable_entity
+          )
+        }
       end
     end
   end

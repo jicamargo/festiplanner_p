@@ -1,4 +1,3 @@
-
 class Schedule
   include ActiveModel::Model
   attr_accessor :schedule_days

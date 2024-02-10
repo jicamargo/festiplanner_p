@@ -3,12 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.2"
 
+gem "foreman", '>= 0.a'
 gem "activerecord-postgres_enum"
 gem "awesome_print"
 gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "date_by_example"
-gem "devise"
+gem "devise", '~> 4.9', '>= 4.9.3'
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "kredis"
@@ -22,7 +23,7 @@ gem "simple_form-tailwind"
 gem "stimulus-rails"
 gem "table_print"
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data" #, platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   gem "cypress-rails"

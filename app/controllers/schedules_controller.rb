@@ -1,4 +1,3 @@
-
 class SchedulesController < ApplicationController
   def show
     @concerts = Concert.includes(:venue, gigs: :band).all
