@@ -4,7 +4,7 @@ import Seat from "./seat"
 interface RowProps {
   rowNumber: number
   seatsPerRow: number
-  tickectsToBuyCount: number
+  ticketsToBuyCount: number
 }
 
 const Row = (props: RowProps): React.ReactElement => {
@@ -13,10 +13,10 @@ const Row = (props: RowProps): React.ReactElement => {
   )
 
   function isSeatValid(seatNumber: number): boolean {
-    if (seatNumber + props.tickectsToBuyCount > props.seatsPerRow) {
+    if (seatNumber + props.ticketsToBuyCount > props.seatsPerRow) {
       return false
     }
-    for (let i=1; i < props.tickectsToBuyCount; i++) {
+    for (let i=1; i < props.ticketsToBuyCount; i++) {
       if (seatStatuses[seatNumber + i] === "held") {
         return false
       }
@@ -50,7 +50,7 @@ const Row = (props: RowProps): React.ReactElement => {
       seatStatuses.map((status, index) => {
         if (
           index >= seatNumber &&
-          index < seatNumber + props.tickectsToBuyCount
+          index < seatNumber + props.ticketsToBuyCount
         ) {
           return newState(seatStatuses[seatNumber])
         } else {

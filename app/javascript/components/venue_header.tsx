@@ -10,7 +10,7 @@ const options = (seatsPerRow: number) => {
   return arrayOfNumbers.map((i) => (
     <option key={i + 1} value={i + 1}>
       {i + 1}
-      </option>
+    </option>
   ))
 }
 
@@ -34,3 +34,5 @@ export const VenueHeader = ({
     </div>
   )
 }
+
+export default VenueHeader
