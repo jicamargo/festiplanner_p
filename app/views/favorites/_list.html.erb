@@ -2,24 +2,28 @@
   <section 
       class="my-4"
       data-controller="css"
-      data-css-css-class="hidden"
+      data-css-css-class="shrink"
       data-css-status.value="false"
     >
     <div class="text-3xl font-bold">
       Favorite Concerts
       <button
-          class="<%= SimpleForm.button_class %> py-1 text-xl font-semibold"
-          data-controller="text"
-          data-text-target="elementWithText"
-          data-text-status.value="false"
-          data-text-off-value="Hide"
-          data-text-on-value="Show"
-          data-action="click->css#toggle click->text#toggle"
+          class="<%= SimpleForm.button_class %> blue-hover"
+          data-controller="css-flip"
+          data-css-flip-status-value="true"
+          data-css-flip-off-class="is-closed"
+          data-css-flip-on-class="is-open"
+          data-action="click->css#toggle click->css-flip#toggle"
         >
-        Hide
+        <%= image_tag("chevron-right.svg",
+          width: 25,
+          height: 25,
+          class: "inline mb-3 slow-transition",
+          "data-css-flip-target": "elementToChange"
+        ) %>
       </button>
     </div>
-    <div data-css-target="elementToChange">
+    <div data-css-target="elementToChange" class="resizer">
       <div class="text-xl font-bold" id="no-favorites">
         <% if current_user.favorites.empty? %>
           No favorite concerts yet
