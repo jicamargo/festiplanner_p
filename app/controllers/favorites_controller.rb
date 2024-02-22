@@ -1,4 +1,3 @@
-
 class FavoritesController < ApplicationController
   def index
     if params[:count_only]
