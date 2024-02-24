@@ -6,8 +6,10 @@ const stateColor = (status: string): string => {
     return "white"
   } else if (status === "held") {
     return "green"
-  } else {
+  } else if (status === "purchased") {
     return "red"
+  } else {
+    return "yellow"
   }
 }
 
@@ -28,12 +30,12 @@ const ButtonSquare = styled.span.attrs({
   }
 `
 interface SeatProps {
+  clickHandler: (seatNumber: number) => void
   seatNumber: number
   status: string
-  clickHandler: (seatNumber: number) => void
 }
 
-const Seat = ({
+export const Seat = ({
   seatNumber,
   status,
   clickHandler,
