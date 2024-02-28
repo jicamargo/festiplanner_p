@@ -2,6 +2,7 @@ import "@hotwired/turbo-rails"
 import "./controllers"
 import "./components/venue_display"
 import "animate.css"
+import "./channels"
 
 document.addEventListener("turbo:before-stream-render", (event) => {
   if (event.target.action === "remove") {
