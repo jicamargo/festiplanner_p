@@ -45,4 +45,18 @@ class Ticket < ApplicationRecord
       status: status
     }
   end
+
+  def self.for_concert(concert_id)
+    return Ticket.all unless concert_id
+    Ticket.where(concert_id: concert_id)
+      .order(row: :asc, number: :asc)
+      .all
+      .reject(&:refunded?)
+  end
+
+  def self.grouped_for_concert(concert_id)
+    return [] unless concert_id
+    puts ">>>>>>>>>>>>>>>> Model ticket.rb > grouped_for_concert concert_id: #{concert_id} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    for_concert(concert_id).map(&:to_concert_h).group_by { |t| t[:row] }.values
+  end
 end

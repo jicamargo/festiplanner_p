@@ -8,12 +8,13 @@ export default class ConcertController extends Controller {
   soldOutValue: boolean
   ticketsRemainingValue: number
 
-  soldOutValueChanged(): void {
-    if (this.soldOutValue) {
+  ticketsRemainingValueChanged(): void {
+    if (this.ticketsRemainingValue === 0) {
       this.ticketsTarget.innerText = "Sold Out"
     } else {
       const ticketsRemaining = `${this.ticketsRemainingValue} Tickets Remaining`
       this.ticketsTarget.innerText = ticketsRemaining
     }
+
   }
 }

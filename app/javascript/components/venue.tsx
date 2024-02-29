@@ -1,12 +1,12 @@
 import * as React from "react"
 import VenueBody from './venue_body'
 import VenueHeader from './venue_header'
-
+import { createConsumer, Subscription } from "@rails/actioncable"
 
 interface VenueProps {
+  concertId: number
   rowCount: number
   seatsPerRow: number
-  concertId: number
 }
 
 export interface TicketData {
@@ -15,11 +15,16 @@ export interface TicketData {
   number: number
   status: string
 }
-
 export type RowData = TicketData[]
 export type VenueData = RowData[]
 
-const Venue = ({rowCount, seatsPerRow, concertId,}: VenueProps): React.ReactElement => {
+let subscription: Subscription
+
+const Venue = ({
+  concertId,
+  rowCount,
+  seatsPerRow,
+}: VenueProps): React.ReactElement => {
   const [ticketsToBuyCount, setTicketsToBuyCount] = React.useState(1)
   const [venueData, setVenueData] = React.useState<VenueData>([])
 
@@ -34,6 +39,18 @@ const Venue = ({rowCount, seatsPerRow, concertId,}: VenueProps): React.ReactElem
     return () => clearInterval(interval)
   },[])
 
+  if (subscription === undefined) {
+    subscription = createConsumer().subscriptions.create(
+      { channel: "ConcertChannel", concertId: concertId },
+      {
+        received(data) {
+          setVenueData(data)
+        }
+      },
+    )
+    console.log("Venue component > Channel subscription: ", subscription)
+  }
+
   return (
     <>
       <VenueHeader
@@ -46,6 +63,7 @@ const Venue = ({rowCount, seatsPerRow, concertId,}: VenueProps): React.ReactElem
         rowCount={rowCount}
         ticketsToBuyCount={ticketsToBuyCount}
         venueData={venueData}
+        subscription={subscription}
       />
     </>
   )

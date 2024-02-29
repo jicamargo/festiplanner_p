@@ -4,6 +4,8 @@ class TicketsController < ApplicationController
   # GET /tickets or /tickets.json
   def index
     @tickets = if params[:concert_id]
+        puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% from tickets_controller.rb index %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% params[:concert_id] = #{params[:concert_id]} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         Ticket.where(concert_id: params[:concert_id])
         .order(row: :asc, number: :asc)
         .all

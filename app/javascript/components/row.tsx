@@ -1,6 +1,7 @@
 import * as React from "react"
 import Seat from "./seat"
 import { RowData, TicketData } from "./venue"
+import { Subscription } from "@rails/actioncable"
 
 interface RowProps {
   concertId: number
@@ -8,6 +9,7 @@ interface RowProps {
   rowNumber: number
   seatsPerRow: number
   ticketsToBuyCount: number
+  subscription: Subscription
 }
 
 const Row = (props: RowProps): React.ReactElement => {
@@ -79,22 +81,15 @@ const Row = (props: RowProps): React.ReactElement => {
     }
     const newSeatStatuses = updateSeatStatus(seatNumber)
     setSeatStatuses(newSeatStatuses)
-    fetch(`/shopping_carts`, {
-      method: "POST",
-      headers: {
-        "X-CSRF-Token": csrfToken(),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+
+    props.subscription.perform("added_to_cart", {
         concertId: props.concertId,
         row: props.rowNumber + 1,
         seatNumber: seatNumber + 1,
         status: newSeatStatuses[seatNumber],
         ticketsToBuyCount: props.ticketsToBuyCount,
-      }),
-    })
+      })
   }
-
 
   const seatItems = Array.from(Array(props.seatsPerRow).keys()).map(
     (seatNumber) => {
