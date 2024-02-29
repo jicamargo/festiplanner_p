@@ -20,7 +20,7 @@ export default class calendarController extends Controller {
       }
     })
   }
-
+  
   showAll(): void {
     this.calendarDayTargets.forEach((target: HTMLElement) => {
       target.dataset.cssStatusValue = "false"

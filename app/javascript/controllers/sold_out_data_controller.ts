@@ -18,7 +18,6 @@ export default class SoldOutDataController extends Controller {
     }
     this.started = true
     this.subscription = this.createSubscription(this)
-    console.log("SoldOutDataController connected, subscription :", this.subscription)
   }
 
   createSubscription(source: SoldOutDataController): Subscription {
