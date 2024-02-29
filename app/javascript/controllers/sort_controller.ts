@@ -27,7 +27,7 @@ export default class SortController extends Controller {
       .sort((a: HTMLElement, b: HTMLElement) => {
         return this.sortValue(a) - this.sortValue(b)
       })
-      .forEach((element: HTMLElement) => this.element.appendChild(element))
+      .forEach((element: HTMLElement) => this.element.append(element))
   }
 
   targetsAlreadySorted(): boolean {
@@ -42,6 +42,6 @@ export default class SortController extends Controller {
   }
 
   sortValue(element: HTMLElement): number {
-    return parseInt(element.dataset.sortValue || "0", 10)
+    return parseInt(element.dataset.sortValue, 10)
   }
 }
