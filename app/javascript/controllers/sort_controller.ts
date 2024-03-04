@@ -20,6 +20,7 @@ export default class SortController extends Controller {
   }
 
   sortTargets(): void {
+    console.log("sortTargets")
     if (this.targetsAlreadySorted()) {
       return
     }
