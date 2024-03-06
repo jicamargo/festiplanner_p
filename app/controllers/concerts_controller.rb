@@ -21,6 +21,7 @@ class ConcertsController < ApplicationController
 
   # GET /concerts/1/edit
   def edit
+    current_user.start_editing(@concert)
   end
 
   # POST /concerts or /concerts.json
@@ -42,6 +43,7 @@ class ConcertsController < ApplicationController
   def update
     respond_to do |format|
       if @concert.update(concert_params)
+        current_user.end_editing(@concert)
         format.turbo_stream {}
         format.html { render(@concert) }
         format.json { render :show, status: :ok, location: @concert }
