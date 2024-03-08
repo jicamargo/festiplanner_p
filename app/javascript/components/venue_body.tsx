@@ -1,45 +1,19 @@
 import * as React from "react"
 import Row from "./row"
-import { VenueData } from "./venue"
-import { Subscription } from "@rails/actioncable"
+import { IsVenueContext, VenueContext } from "./app"
 
-interface VenueBodyProps {
-  concertId: number
-  rowCount: number
-  seatsPerRow: number
-  ticketsToBuyCount: number
-  venueData: VenueData
-  subscription: Subscription
-}
-
-const rowItems = ({
-  concertId,
-  rowCount,
-  seatsPerRow,
-  ticketsToBuyCount,
-  venueData,
-  subscription
-}) => {
+const rowItems = ( rowCount ) => {
   const rowNumbers = Array.from(Array(rowCount).keys())
   return rowNumbers.map((rowNumber) => (
-    <Row
-      concertId={concertId}
-      key={rowNumber}
-      rowData={venueData[rowNumber]}
-      rowNumber={rowNumber}
-      seatsPerRow={seatsPerRow}
-      ticketsToBuyCount={ticketsToBuyCount}
-      subscription={subscription}
-    />
+    <Row key={rowNumber + 1} rowNumber={rowNumber + 1} />
   ))
 }
 
-export const VenueBody = (props: VenueBodyProps): React.ReactElement => {
+export const VenueBody = (): React.ReactElement => {
+  const context = React.useContext<IsVenueContext>(VenueContext)
   return (
     <table className="table">
-      <tbody>
-        {rowItems(props)}
-      </tbody>
+      <tbody>{rowItems(context.state.rowCount)}</tbody>
     </table>
   )
 }

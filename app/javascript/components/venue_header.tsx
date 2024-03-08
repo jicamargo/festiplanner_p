@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import  { IsVenueContext, VenueContext } from './app'
 
 const Header = styled.span`
   font-size: 1.5rem;
@@ -7,12 +8,6 @@ const Header = styled.span`
   margin-right: 15px;
   margon-left: 15px;
 `
-
-interface VenueHeaderProps {
-  seatsPerRow: number
-  setTicketsToBuyCount: (n: number) => void
-}
-
 const options = (seatsPerRow: number) => {
   const arrayOfNumbers = Array.from(Array(seatsPerRow).keys())
   return arrayOfNumbers.map((i) => (
@@ -22,13 +17,14 @@ const options = (seatsPerRow: number) => {
   ))
 }
 
-export const VenueHeader = ({
-  seatsPerRow,
-  setTicketsToBuyCount,
-}: VenueHeaderProps): React.ReactElement => {
+export const VenueHeader = (): React.ReactElement => {
+  const context = React.useContext<IsVenueContext>(VenueContext)
   const setTickectsOnChange = (event: React.SyntheticEvent): void => {
     const target = event.target as HTMLSelectElement
-    setTicketsToBuyCount(parseInt(target.value, 10))
+    context.dispatch({
+      type: "setTicketsToBuy",
+      amount: parseInt(target.value, 10),
+    })
   }
 
   return (
@@ -36,7 +32,7 @@ export const VenueHeader = ({
       <Header>How many tickets would you like?</Header>
       <span className="select">
         <select onChange={setTickectsOnChange}>
-          {options(seatsPerRow)}
+          {options(context.state.seatsPerRow)}
         </select>
       </span>
     </div>
