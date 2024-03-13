@@ -6,7 +6,7 @@ class TicketsController < ApplicationController
     @tickets = Ticket.data_for_concert(params[:concert_id])
     respond_to do |format|
       format.html
-      format.json render{(json: @tickets)}
+      format.json { render(json: @tickets) }
     end
   end
 

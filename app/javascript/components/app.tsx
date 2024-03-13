@@ -1,6 +1,6 @@
 import * as React from "react"
 import Venue from "./venue"
-import  { venueReducer, initialState } from "..contexts/venue_context"
+import  { venueReducer, initialState } from "../contexts/venue_context"
 import { VenueAction, VenueState } from "../contexts/venue_types"
 
 export interface AppProps {
@@ -39,3 +39,5 @@ export const App = (props: AppProps): React.ReactElement => {
     </VenueContext.Provider>
   )
 }
+
+export default App

@@ -61,7 +61,7 @@ export const Seat = ({
     if (seatMatch(context.state.otherTickets, true)) {
       return "purchased"
     }
-    if (seatMatch(context.state.myTickets)) {
+    if (seatMatch(context.state.myTickets, true)) {
       return "held"
     }
     if (

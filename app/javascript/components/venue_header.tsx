@@ -29,12 +29,13 @@ export const VenueHeader = (): React.ReactElement => {
 
   return (
     <div>
-      <Header>How many tickets would you like?</Header>
-      <span className="select">
-        <select onChange={setTickectsOnChange}>
-          {options(context.state.seatsPerRow)}
-        </select>
-      </span>
+      <Header>How many tickets would you like?:
+        <span className="select ml-2">
+          <select onChange={setTickectsOnChange}>
+            {options(context.state.seatsPerRow)}
+          </select>
+        </span>
+      </Header>
     </div>
   )
 }

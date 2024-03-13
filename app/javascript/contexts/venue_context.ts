@@ -2,6 +2,7 @@ import { AppProps } from "../components/app"
 import { VenueState, VenueAction } from "./venue_types"
 
 export const initialState = (props: AppProps): VenueState => {
+  // console.log("initialState -> props:", props)
   return {
     rowCount: props.rowCount,
     seatsPerRow: props.seatsPerRow,
@@ -16,6 +17,7 @@ export const venueReducer = (
   state: VenueState,
   action: VenueAction
 ): VenueState => {
+  // console.log("venueReducer state, action:", state,  action)
   switch (action.type) {
     case "setTickets":
       return {
@@ -43,10 +45,11 @@ export const venueReducer = (
           status: "held",
         }
       })
-      return {
+      const newState = {
         ...state,
         myTickets: [...state.myTickets, ...newTickets],
       }
+      return newState
     }
     case "unholdTicket": {
       const newTickets = state.myTickets.filter((ticket) => {
