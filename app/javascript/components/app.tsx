@@ -1,8 +1,9 @@
 import * as React from "react"
 import Venue from "./venue"
-import  { venueReducer, initialState } from "../contexts/venue_context"
+import  { venueStore, AppDispatch } from "../contexts/venue_context"
 import { VenueAction, VenueState } from "../contexts/venue_types"
 import { Subscription, createConsumer } from "@rails/actioncable"
+import { Provider } from "react-redux"
 
 export interface AppProps {
   concertId: number
@@ -16,14 +17,13 @@ export interface IsVenueContext {
 }
 
 export const VenueContext = React.createContext<IsVenueContext>(null)
-
 export const SubscriptionContext = React.createContext<Subscription>(null)
 
 let appSubscription: Subscription = null
 
 const initSubscription = (
   state: VenueState,
-  dispatch: React.Dispatch<VenueAction>
+  dispatch: AppDispatch
 ): Subscription => {
     if (!appSubscription) {
       appSubscription = createConsumer().subscriptions.create(
@@ -40,28 +40,23 @@ const initSubscription = (
 }
 
 export const App = (props: AppProps): React.ReactElement => {
-    const [state, dispatch] = React.useReducer(
-      venueReducer,
-      initialState(props)
-      )
+    venueStore.dispatch({ type: "initFromProps", props })
+
     React.useEffect(() => {
       const fetchData = async () => {
         const response = await fetch(
           `/tickets.json?concert_id=${props.concertId}`
         )
         const tickets = await response.json()
-        dispatch({ type: "setTickets", tickets: tickets })
+        venueStore.dispatch({ type: "setTickets", tickets: tickets })
       }
-  
       fetchData()
     }, [])
   
     return (
-      <VenueContext.Provider value={{ state, dispatch }}>
-        <SubscriptionContext.Provider value={initSubscription(state, dispatch)}>
-          <Venue />
-        </SubscriptionContext.Provider> 
-      </VenueContext.Provider>
+      <Provider store={venueStore}>
+        <Venue />
+      </Provider>
     )
   }
   
