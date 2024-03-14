@@ -1,6 +1,6 @@
 class ConcertsController < ApplicationController
   before_action :set_concert, only: %i[show edit update destroy]
-
+  
   # GET /concerts or /concerts.json
   def index
     @query = params[:query]

@@ -56,7 +56,6 @@ class Ticket < ApplicationRecord
 
   def self.grouped_for_concert(concert_id)
     return [] unless concert_id
-    puts ">>>>>>>>>>>>>>>> Model ticket.rb > grouped_for_concert concert_id: #{concert_id} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     for_concert(concert_id).map(&:to_concert_h).group_by { |t| t[:row] }.values
   end
 

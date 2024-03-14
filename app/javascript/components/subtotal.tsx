@@ -1,6 +1,7 @@
 import * as React from "react"
 import styled from "styled-components"
-import { IsVenueContext, VenueContext } from "./app"
+import { IsVenueContext, SubscriptionContext, VenueContext } from "./app"
+import { Subscription } from "@rails/actioncable"
 
 const Header = styled.div`
   font-size: 1.5rem;
@@ -14,8 +15,13 @@ const buttonClass = "px-5 py-4 m-2 my-4 w-40 text-center text-white cursor-point
   
 const Subtotal = (): React.ReactElement => {
   const context = React.useContext<IsVenueContext>(VenueContext)
+  const subscription = React.useContext<Subscription>(SubscriptionContext)
 
   const onClear = ()  => {
+    subscription.perform("removed_from_cart", {
+      concertId: context.state.concertId,
+      tickets: context.state.myTickets,
+    })
     context.dispatch({ type: "clearHolds" })
   }
 

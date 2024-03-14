@@ -1,7 +1,8 @@
 import * as React from "react"
 import styled from "styled-components"
 import { TicketData } from "../contexts/venue_types"
-import { IsVenueContext, VenueContext } from "./app"
+import { IsVenueContext, SubscriptionContext, VenueContext } from "./app"
+import { Subscription } from "@rails/actioncable"
 
 const stateColor = (status: string): string => {
   if (status === "unsold") {
@@ -43,6 +44,7 @@ export const Seat = ({
   rowNumber,
 }: SeatProps): React.ReactElement => {
   const context = React.useContext<IsVenueContext>(VenueContext)
+  const subscription = React.useContext<Subscription>(SubscriptionContext)
 
   const seatMatch = (ticketList: TicketData[], exact = false): boolean => {
     for (const heldTicket of ticketList) {
@@ -82,6 +84,15 @@ export const Seat = ({
     }
     const actionType = status === "unsold" ? "holdTicket" : "unholdTicket"
     context.dispatch({ type: actionType, seatNumber, rowNumber })
+    const object_for_cable = {
+      concertId: context.state.concertId,
+      row: rowNumber,
+      seatNumber: seatNumber,
+      status: actionType === "holdTicket" ? "held" : "unsold",
+      ticketsToBuyCount: context.state.ticketsToBuyCount,
+    }
+    console.log("Seat.tsx: object_for_cable", object_for_cable)
+    subscription.perform("added_to_cart", object_for_cable)
   }
 
   return (
