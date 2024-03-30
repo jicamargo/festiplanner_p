@@ -36,4 +36,34 @@ class Ticket < ApplicationRecord
       update(status: "unsold", user: user)
     end
   end
+
+  def to_concert_h
+    {
+      id: id,
+      row: row,
+      number: number,
+      status: status
+    }
+  end
+
+  def self.for_concert(concert_id)
+    return Ticket.all unless concert_id
+    Ticket.where(concert_id: concert_id)
+      .order(row: :asc, number: :asc)
+      .all
+      .reject(&:refunded?)
+  end
+
+  def self.grouped_for_concert(concert_id)
+    return [] unless concert_id
+    for_concert(concert_id).map(&:to_concert_h).group_by { |t| t[:row] }.values
+  end
+
+  def self.data_for_concert(concert_id)
+    for_concert(concert_id).select(&:unavailable?).map(&:to_concert_h)
+  end
+
+  def unavailable?
+    held? || purchased?
+  end
 end
