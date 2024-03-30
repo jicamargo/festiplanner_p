@@ -1,27 +1,26 @@
-import * as React from "react"
-import styled from "styled-components"
-import { TicketData } from "../contexts/venue_types"
-import { IsVenueContext, SubscriptionContext, VenueContext } from "./app"
-import { Subscription } from "@rails/actioncable"
+import * as React from "react";
+import styled from "styled-components";
+import { TicketData } from "../contexts/venue_types";
+import { seatChange, useAppDispatch, useAppSelector } from "../contexts/venue_context";
 
 const stateColor = (status: string): string => {
   if (status === "unsold") {
-    return "white"
+    return "white";
   } else if (status === "held") {
-    return "green"
+    return "green";
   } else if (status === "purchased") {
-    return "red"
+    return "red";
   } else {
-    return "yellow"
+    return "yellow";
   }
-}
+};
 
 interface SquareProps {
-  status: string
-  className?: string
+  status: string;
+  className?: string;
 }
 
-const buttonClass = "p-4 m-2 border-black border-4 text-lg cursor-pointer"
+const buttonClass = "p-4 m-2 border-black border-4 text-lg cursor-pointer";
 
 const ButtonSquare = styled.span.attrs({
   className: buttonClass,
@@ -31,77 +30,70 @@ const ButtonSquare = styled.span.attrs({
   
   &:hover {
     background-color: ${(props) => 
-      (props.status === "unsold" ? "lightblue" : stateColor(props.status))};
+      props.status === "unsold" ? "lightblue" : stateColor(props.status)};
   }
-`
+`;
+
 interface SeatProps {
-  seatNumber: number
-  rowNumber: number
+  seatNumber: number;
+  rowNumber: number;
 }
 
 export const Seat = ({
   seatNumber,
   rowNumber,
 }: SeatProps): React.ReactElement => {
-  const context = React.useContext<IsVenueContext>(VenueContext)
-  const subscription = React.useContext<Subscription>(SubscriptionContext)
-
+  const myTickets = useAppSelector((state) => state.myTickets);
+  const otherTickets = useAppSelector((state) => state.otherTickets);
+  const ticketsToBuyCount = useAppSelector((state) => state.ticketsToBuyCount);
+  const seatsPerRow = useAppSelector((state) => state.seatsPerRow);
+  const dispatch = useAppDispatch();
+  
   const seatMatch = (ticketList: TicketData[], exact = false): boolean => {
     for (const heldTicket of ticketList) {
-      const rowMatch = heldTicket.row == rowNumber
-      const seatDiff = heldTicket.number - seatNumber
-      const diff = exact ? 1 : context.state.ticketsToBuyCount
-      const seatMatch = seatDiff >= 0 && seatDiff < diff
+      const rowMatch = heldTicket.row == rowNumber;
+      const seatDiff = heldTicket.number - seatNumber;
+      const diff = exact ? 1 : ticketsToBuyCount;
+      const seatMatch = seatDiff >= 0 && seatDiff < diff;
       if (rowMatch && seatMatch) {
-        return true
+        return true;
       }
     }
-    return false
-  }
+    return false;
+  };
 
   const currentStatus = (): string => {
-    if (seatMatch(context.state.otherTickets, true)) {
-      return "purchased"
+    if (seatMatch(otherTickets, true)) {
+      return "purchased";
     }
-    if (seatMatch(context.state.myTickets, true)) {
-      return "held"
+    if (seatMatch(myTickets, true)) {
+      return "held";
     }
     if (
-      seatMatch(context.state.otherTickets) ||
-      seatMatch(context.state.myTickets) ||
-      seatNumber + context.state.ticketsToBuyCount - 1 >
-        context.state.seatsPerRow
+      seatMatch(otherTickets) ||
+      seatMatch(myTickets) ||
+      seatNumber + ticketsToBuyCount - 1 > seatsPerRow
     ) {
-      return "invalid"
+      return "invalid";
     }
-    return "unsold"
-  }
+    return "unsold";
+  };
 
   const onSeatChange = (): void => {
-    const status = currentStatus()
+    const status = currentStatus();
     if (status === "invalid" || status === "purchased") {
-      return
+      return;
     }
-    const actionType = status === "unsold" ? "holdTicket" : "unholdTicket"
-    context.dispatch({ type: actionType, seatNumber, rowNumber })
-    const object_for_cable = {
-      concertId: context.state.concertId,
-      row: rowNumber,
-      seatNumber: seatNumber,
-      status: actionType === "holdTicket" ? "held" : "unsold",
-      ticketsToBuyCount: context.state.ticketsToBuyCount,
-    }
-    console.log("Seat.tsx: object_for_cable", object_for_cable)
-    subscription.perform("added_to_cart", object_for_cable)
-  }
+    dispatch(seatChange(status, rowNumber, seatNumber));
+  };
 
   return (
     <td>
       <ButtonSquare status={currentStatus()} onClick={onSeatChange}>
         {seatNumber}
-        </ButtonSquare>
+      </ButtonSquare>
     </td>
-  )
-}
+  );
+};
 
-export default Seat
+export default Seat;

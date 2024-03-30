@@ -1,7 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
-import { IsVenueContext, SubscriptionContext, VenueContext } from "./app"
-import { Subscription } from "@rails/actioncable"
+import { clearCart, useAppSelector, useAppDispatch } from "../contexts/venue_context"
 
 const Header = styled.div`
   font-size: 1.5rem;
@@ -14,26 +13,22 @@ const buttonClass = "px-5 py-4 m-2 my-4 w-40 text-center text-white cursor-point
     "duration-150 bg-gray-800 rounded-lg focus:shadow-outline hover:bg-black"
   
 const Subtotal = (): React.ReactElement => {
-  const context = React.useContext<IsVenueContext>(VenueContext)
-  const subscription = React.useContext<Subscription>(SubscriptionContext)
+  const myTickets = useAppSelector((state) => state.myTickets)
+  const dispatch = useAppDispatch()
 
   const onClear = ()  => {
-    subscription.perform("removed_from_cart", {
-      concertId: context.state.concertId,
-      tickets: context.state.myTickets,
-    })
-    context.dispatch({ type: "clearHolds" })
+    dispatch(clearCart())
   }
 
   return (
     <>
       <Header>
         <span>Current Tickets Purchased: &nbsp;</span>
-        <span>${context.state.myTickets.length}</span>
+        <span>${myTickets.length}</span>
       </Header>
       <Header>
         <span>Current Tickets Cost: &nbsp;</span>
-        <span>${context.state.myTickets.length *15 }.00</span>
+        <span>${myTickets.length *15 }.00</span>
       </Header>
       <div className={buttonClass} onClick={onClear}>
         Clear Tickets

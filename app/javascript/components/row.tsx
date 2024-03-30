@@ -1,22 +1,22 @@
 import * as React from "react"
 import Seat from "./seat"
-import { IsVenueContext, VenueContext } from "./app"
+import { useAppSelector } from "../contexts/venue_context"
 
 interface RowProps {
   rowNumber: number
 }
 
 const Row = ({ rowNumber }: RowProps): React.ReactElement => {
-  const context = React.useContext<IsVenueContext>(VenueContext)
+  const seatsPerRow = useAppSelector((state) => state.seatsPerRow)
 
-  const seatItems = Array.from(Array(context.state.seatsPerRow).keys()).map(
+  const seatItems = Array.from(Array(seatsPerRow).keys()).map(
     (seatNumber) => {
       return (
         <Seat 
           key={seatNumber + 1}
           seatNumber={seatNumber + 1}
           rowNumber={rowNumber}
-          />
+        />
       )
     }
   )

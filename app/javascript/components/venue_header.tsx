@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import  { IsVenueContext, VenueContext } from './app'
+import { useAppDispatch, useAppSelector } from "../contexts/venue_context"
 
 const Header = styled.span`
   font-size: 1.5rem;
@@ -18,10 +18,11 @@ const options = (seatsPerRow: number) => {
 }
 
 export const VenueHeader = (): React.ReactElement => {
-  const context = React.useContext<IsVenueContext>(VenueContext)
+  const seatsPerRow = useAppSelector((state) => state.seatsPerRow)
+  const dispatch = useAppDispatch()
   const setTickectsOnChange = (event: React.SyntheticEvent): void => {
     const target = event.target as HTMLSelectElement
-    context.dispatch({
+    dispatch({
       type: "setTicketsToBuy",
       amount: parseInt(target.value, 10),
     })
@@ -32,7 +33,7 @@ export const VenueHeader = (): React.ReactElement => {
       <Header>How many tickets would you like?:
         <span className="select ml-2">
           <select onChange={setTickectsOnChange}>
-            {options(context.state.seatsPerRow)}
+            {options(seatsPerRow)}
           </select>
         </span>
       </Header>

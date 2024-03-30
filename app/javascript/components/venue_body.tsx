@@ -1,8 +1,8 @@
 import * as React from "react"
 import Row from "./row"
-import { IsVenueContext, VenueContext } from "./app"
+import { useAppSelector } from "../contexts/venue_context"
 
-const rowItems = ( rowCount ) => {
+const rowItems = (rowCount: number) => {
   const rowNumbers = Array.from(Array(rowCount).keys())
   return rowNumbers.map((rowNumber) => (
     <Row key={rowNumber + 1} rowNumber={rowNumber + 1} />
@@ -10,10 +10,10 @@ const rowItems = ( rowCount ) => {
 }
 
 export const VenueBody = (): React.ReactElement => {
-  const context = React.useContext<IsVenueContext>(VenueContext)
+  const rowCount = useAppSelector((state) => state.rowCount)
   return (
     <table className="table">
-      <tbody>{rowItems(context.state.rowCount)}</tbody>
+      <tbody>{rowItems(rowCount)}</tbody>
     </table>
   )
 }
