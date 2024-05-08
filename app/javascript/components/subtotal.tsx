@@ -1,6 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
-import { useAppDispatch, useAppSelector } from "../contexts/venue_context"
+import { clearCart, useAppDispatch, useAppSelector } from "../contexts/venue_context"
 
 const Header = styled.div`
   font-size: 1.2rem;
@@ -18,7 +18,7 @@ const Subtotal = (): React.ReactElement => {
   const dispatch = useAppDispatch()
 
   const onClear = () => {
-    dispatch({ type: "clearHolds" })
+    dispatch(clearCart())
   }
   return (
     <div className="flex border border-black rounded-lg w-4/5">
