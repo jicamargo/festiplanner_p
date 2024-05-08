@@ -72,7 +72,9 @@ class ConcertsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_concert
-    @concert = Concert.includes(:tickets).find(params[:id])
+    # @concert = Concert.includes(:bands, :tickets).find(params[:id])
+    @concert = Concert.includes(:bands).find(params[:id])
+    # @concert = Concert.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

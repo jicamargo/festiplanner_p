@@ -35,6 +35,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "standard"
   gem "test-prof"
+  gem 'bullet'
 end
 
 group :development do

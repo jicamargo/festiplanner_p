@@ -31,7 +31,7 @@
       </div>
       <div id="favorite-concerts-list"
           data-controller="sort">
-        <% current_user.favorites.sort_by(&:sort_date).each do |favorite| %>
+        <% current_user.favorites.includes(concert: :bands).sort_by(&:sort_date).each do |favorite| %>
           <%= render(favorite, animate_in: false) %>
         <% end %>
       </div>

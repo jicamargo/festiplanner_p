@@ -42,7 +42,7 @@
     <%= render("favorites/list") %>
   <% end %>
   <section class="sort">
-    <% @concerts.sort_by(&:start_time).each do |concert| %>
+    <% @concerts.includes(:bands).sort_by(&:start_time).each do |concert| %>
       <%= render(concert, user: current_user) %>
     <% end %>
   </section>
