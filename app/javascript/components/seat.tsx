@@ -1,7 +1,7 @@
 import * as React from "react"
 import styled from "styled-components"
 import { TicketData } from "../contexts/venue_types"
-import { useAppDispatch, useAppSelector } from "../contexts/venue_context"
+import { seatChange, useAppDispatch, useAppSelector } from "../contexts/venue_context"
 
 const stateColor = (status: string): string => {
   if (status === "unsold") {
@@ -80,8 +80,7 @@ export const Seat = ({
     if (status === "invalid" || status === "purchased") {
       return
     }
-    const actionType = status === "unsold" ? "holdTicket" : "unholdTicket"
-    dispatch({ type: actionType, seatNumber, rowNumber })
+    dispatch(seatChange(status, rowNumber, seatNumber))
   }
 
   return (
