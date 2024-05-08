@@ -4,10 +4,10 @@
 <% end %>
 <% if user.favorites.empty? %>
   <%= turbo_stream.update("no-favorites") do %>
-    No favorites concerts yet
+    No favorite concerts yet
   <% end %>
 <% end %>
 <%= turbo_stream.update(
-        "favorites-count",
-        plain: user.favorites.count
-      ) %>
+      "favorites-count",
+      plain: user.favorites.count
+    ) %>

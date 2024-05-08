@@ -7,6 +7,6 @@
 <br>
 
 <div>
-  <%= link_to "Show this concert", @concert %> |
-  <%= link_to "Back to concerts", concerts_path %>
+  <%= link_to("Back to concert", @concert, class: SimpleForm.button_class) %>
+  <%= link_to("Back to Schedule", root_path, class: SimpleForm.button_class) %>
 </div>

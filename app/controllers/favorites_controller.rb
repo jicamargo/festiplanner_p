@@ -1,7 +1,7 @@
 class FavoritesController < ApplicationController
   def index
     if params[:count_only]
-      render(partial: "favorites/count")
+      render(partial: "favorites/count")     
     end
   end
 

@@ -9,7 +9,7 @@
 <h3 class="text-xl">Venue: <%= @concert.venue.name %></h3>
 <h3 class="text-xl">Schedule:</h3>
 <% running_time = @concert.start_time %>
-<table class="table border border-black w-4/5">
+<table class="table border border-black rounded-lg w-4/5 p-1">
   <thead>
     <tr>
       <th>Time</th>
@@ -22,7 +22,7 @@
       <tr>
         <td><%= running_time.by_example("03:04 PM") %></td>
         <td><%= gig.band.name %></td>
-        <td><%= gig.band.genre_tags.split(",").join(", ") %></td>
+        <td><%= gig.band.genre_tags.split(",").join(", ")%></td> 
         <% running_time += (gig.duration_minutes * 60) %>
       </tr>
     <% end %>
@@ -35,10 +35,10 @@
         data-seats-per-row="<%= @concert.venue.seats_per_row %>"
         data-concert-id="<%= @concert.id %>%">
   </div>
-
 </div>
-<div class="actions">
-  <%= link_to("Edit", edit_concert_path(@concert)) %>
-  |
-  <%= link_to("Back", concerts_path) %>
-</div>
+<% if current_user %>
+  <div class="actions">
+    <%= link_to("Edit", edit_concert_path(@concert), class: SimpleForm.button_class) %>
+    <%= link_to("Back", root_path, class: SimpleForm.button_class) %>
+  </div>
+<% end %>
