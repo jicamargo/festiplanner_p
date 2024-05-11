@@ -15,17 +15,40 @@ const stateColor = (status: string): string => {
   }
 }
 
+const stateTextColor = (status: string): string => {
+  if (status === "unsold") {
+    return "black"
+  } else if (status === "held") {
+    return "white"
+  } else if (status === "purchased") {
+    return "white"
+  } else {
+    return "black"
+  }
+}
+
 interface SquareProps {
   status: string
   className?: string
 }
-const buttonClass = "p-4 m-2 my-10 border-black border-4 text-lg"
+const buttonClass = "inline-block p-1 m-1 cursor-pointer font-bold text-center"
 
 const ButtonSquare = styled.span.attrs({
   className: buttonClass,
 })<SquareProps>`
   background-color: ${(props) => stateColor(props.status)};
-  transition: all 0.5s ease-in-out;
+  color: ${(props) => stateTextColor(props.status)};
+  transition: all 0.3s ease-in-out;
+
+  border-top-width: 1px; /* Borde superior más delgado */
+  border-bottom-left-radius: 15px; /* Esquinas inferiores redondeadas */
+  border-bottom-right-radius: 15px;
+  border-left-width: 5px; /* Bordes laterales más gruesos */
+  border-right-width: 5px;
+  border-bottom-width: 3px;
+  border-color: gray;
+  border-style: solid; /* Tipo de borde */
+  width: 50px;
 
   &:hover {
     background-color: ${(props) =>
