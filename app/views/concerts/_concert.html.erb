@@ -5,7 +5,7 @@
     "data-sort-value": concert.start_time.to_i,
     "data-#{concert.start_time.by_example("2006-01-02")}": true
   ) do %>
-  <% if current_user&.is_editing?(concert) %>
+  <% if user&.is_editing?(concert) %>
     <%= render"concerts/form", concert: concert %>
   <% else %>
     <article class="my-4"
