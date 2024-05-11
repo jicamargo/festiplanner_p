@@ -20,7 +20,7 @@ const Row = ({ rowNumber }: RowProps): React.ReactElement => {
       )
     }
   )
-  return <tr className="h-20">{seatItems}</tr>
+  return <tr className="h-14">{seatItems}</tr>
 }
 
 export default Row
