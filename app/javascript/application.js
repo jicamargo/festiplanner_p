@@ -3,6 +3,7 @@ import "./controllers"
 import "./components/venue_display"
 import "animate.css"
 import "./channels"
+import "./menu_toggle"
 
 document.addEventListener("turbo:before-stream-render", (event) => {
   if (event.target.action === "remove") {
@@ -17,3 +18,5 @@ document.addEventListener("turbo:before-stream-render", (event) => {
     }
   }
 })
+
+console.log("application.js loaded");
