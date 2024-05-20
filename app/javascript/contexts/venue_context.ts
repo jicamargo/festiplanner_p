@@ -12,8 +12,9 @@ export const initialState = {
   otherTickets: [],
   ticketsToBuyCount: 1,
   myTickets: [],
+  loading: true,
 }
-
+ 
 let subscription: Subscription
 
 export const initSubscription = (): void => {
@@ -36,11 +37,13 @@ type VenueThunk = ThunkAction<void, VenueState, null, VenueAction>
 
 export const fetchData = (): VenueThunk => {
   return async (dispatch, getState) => {
+    dispatch({ type: "setLoading", loading: true })
     const response = await fetch(
       `/tickets.json?concert_id=${getState().concertId}`
     )
     const tickets = await response.json()
     dispatch({ type: "setTickets", tickets })
+    dispatch({ type: "setLoading", loading: false })
   }
 }
 
@@ -126,6 +129,8 @@ export const venueReducer = (
         seatsPerRow: action.props.seatsPerRow,
       }
     }
+    case "setLoading":
+      return { ...state, loading: action.loading }
     default:
       return state
   }

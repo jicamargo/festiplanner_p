@@ -14,6 +14,7 @@ export interface VenueState {
   rowCount: number
   seatsPerRow: number
   ticketsToBuyCount: number
+  loading: boolean
 }
 
 interface InitFromProps {
@@ -47,6 +48,11 @@ interface SetTickets {
   tickets: TicketData[]
 }
 
+interface SetLoading {
+  type: "setLoading"
+  loading: boolean
+}
+
 export type VenueAction =
   | InitFromProps
   | SetTicketToBuy
@@ -54,4 +60,5 @@ export type VenueAction =
   | UnholdTicket
   | ClearHolds
   | SetTickets
+  | SetLoading
   
