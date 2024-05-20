@@ -10,8 +10,12 @@ export default class ConcertController extends Controller {
 
   ticketsRemainingValueChanged(): void {
     if (this.ticketsRemainingValue === 0) {
-      this.ticketsTarget.innerText = "Sold Out"
+      // add a class to the element for a red background
+      this.ticketsTarget.classList.add("bg-red-200")
+      this.ticketsTarget.innerText = "!Sold Out!"
     } else {
+      // add a class to the element for a green background
+      this.ticketsTarget.classList.add("bg-green-200")
       const ticketsRemaining = `${this.ticketsRemainingValue} Tickets Remaining`
       this.ticketsTarget.innerText = ticketsRemaining
     }

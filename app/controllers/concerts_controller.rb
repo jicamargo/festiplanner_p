@@ -10,6 +10,7 @@ class ConcertsController < ApplicationController
   # GET /concerts/1 or /concerts/1.json
   def show
     if params[:inline]
+      current_user.end_editing(@concert)
       render(@concert, locals: {user: current_user})
     end
   end
