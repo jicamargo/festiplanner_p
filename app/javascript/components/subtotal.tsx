@@ -9,9 +9,9 @@ const Header = styled.div`
   margin-right: 15px;
 `
 
-const buttonClass =
-  "px-5 py-4 m-2 my-4 w-40 text-center text-white transition-colors cursor-pointer " +
-  "duration-150 bg-gray-600 rounded-lg focus:shadow-outline hover:bg-gray-900"
+const buttonClassSmall =
+  "px-3 py-2 m-1 my-1 w-30 text-center text-white transition-colors cursor-pointer " +
+  "duration-150 rounded-lg focus:shadow-outline "
 
 const Subtotal = (): React.ReactElement => {
   const myTickets = useAppSelector((state) => state.myTickets)
@@ -21,8 +21,8 @@ const Subtotal = (): React.ReactElement => {
     dispatch(clearCart())
   }
   return (
-    <div className="flex border border-black rounded-lg w-full md:w-4/5">
-      <div className="flex flex-col justify-center mr-4">
+    <div className="flex border border-slate-400 rounded-lg w-full mx-auto mt-2 md:w-4/5">
+      <div className="flex flex-col grow justify-center mr-4">
         <Header>
           <span>Tickets Purchased: &nbsp;</span>
           <span>{myTickets.length}</span>
@@ -32,8 +32,13 @@ const Subtotal = (): React.ReactElement => {
           <span>${myTickets.length * 15}.00</span>
         </Header>
       </div>
-      <div className={buttonClass} onClick={onClear}>
-        Clear Tickets
+      <div className="flex flex-col grow-0 justify-center">
+        <div className={buttonClassSmall + " bg-gray-600 hover:bg-gray-900"} onClick={onClear}>
+          Clear Tickets
+        </div>
+        <div className={buttonClassSmall + " bg-green-600 hover:bg-green-700"} onClick={() => alert("Payment not implemented in this demo")}>
+          Pay Now
+        </div>
       </div>
     </div>
   )

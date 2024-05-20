@@ -1,4 +1,6 @@
-<h1>Editing concert</h1>
+<h1 class="text-2xl font-bold w-auto text-center md:text-4xl">
+  Editing concert
+</h1>
 
 <%= turbo_frame_tag(dom_id(@concert)) do %>
   <%= render "form", concert: @concert %>

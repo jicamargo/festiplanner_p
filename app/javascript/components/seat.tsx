@@ -31,7 +31,7 @@ interface SquareProps {
   status: string
   className?: string
 }
-const buttonClass = "inline-block p-1 m-1 cursor-pointer font-bold text-center"
+const buttonClass = "inline-block m-1 cursor-pointer font-bold text-center"
 
 const ButtonSquare = styled.span.attrs({
   className: buttonClass,
@@ -40,15 +40,15 @@ const ButtonSquare = styled.span.attrs({
   color: ${(props) => stateTextColor(props.status)};
   transition: all 0.3s ease-in-out;
 
-  border-top-width: 1px; /* Borde superior más delgado */
-  border-bottom-left-radius: 15px; /* Esquinas inferiores redondeadas */
+  border-top-width: 1px; 
+  border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  border-left-width: 5px; /* Bordes laterales más gruesos */
-  border-right-width: 5px;
-  border-bottom-width: 3px;
-  border-color: gray;
-  border-style: solid; /* Tipo de borde */
-  width: 50px;
+  border-left-width: 4px;
+  border-right-width: 4px;
+  border-bottom-width: 2px;
+  border-color: rgb(100 116 139);
+  border-style: solid;
+  width: 30px;
 
   &:hover {
     background-color: ${(props) =>
