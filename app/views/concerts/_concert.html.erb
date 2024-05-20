@@ -8,18 +8,18 @@
   <% if user&.is_editing?(concert) %>
     <%= render"concerts/form", concert: concert %>
   <% else %>
-    <article class="my-4"
+    <article class="my-2 border-b-2"
               data-sold-out-data-target = "concert"
               data-controller="concert"
               data-concert-id-value = "<%= concert.id %>"
               data-concert-sold-out-value = "<%= concert.sold_out? ? 'true' : 'false' %>"
               data-concert-tickets-remaining-value = "<%= concert.unsold_ticket_count %>">
-      <div class="grid gap-4 grid-cols-5">
+      <div class="grid gap-y-2 gap-x-0 grid-cols-1 p-2 sm:grid-cols-5 sm:gap-x-2 sm:gap-y-2">
         <div class="col-span-1 text-xl">
           <%= concert.start_time.by_example("3:04 PM") %>
         </div>
         <div class="col-span-3">
-          <div class="name">
+          <div class="name gray-hover">
             <div class="text-lg font-bold">
               <%= link_to(
                 concert.name,
@@ -38,11 +38,9 @@
             <%= concert.venue.name %>
           </div>
         </div>
-        <div class="col-span-1 text-xl my-10">
-          <span class="text-lg font-bold" data-concert-target="tickets"></span>
-          <br>
-          <br>
-          <div class="flex">
+        <div class="text-base pt-2 sm:text-lg text-center bg-gray-100">
+          <span class="font-semibold sm:text-lg px-4 rounded-xl" data-concert-target="tickets"></span>
+          <div class="text-base w-full flex flex-wrap justify-center sm:text-lg ">
             <% if user %>
               <%= link_to(
                     "Edit",

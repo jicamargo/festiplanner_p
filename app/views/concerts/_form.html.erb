@@ -8,11 +8,11 @@
             ) %>
       </div>
     <% end %>
-    <div class="grid gap-4 grid-cols-6">
+    <div class="grid gap-2 grid-cols-1 sm:grid-cols-6">
       <div class="col-span-2 text-xl">
         <%= f.input :start_time %>
       </div>
-      <div class="col-span-3">
+      <div class="col-span-4">
         <div class="name">
           <div class="text-lg font-bold">
             <%= f.input :name %>
@@ -27,12 +27,22 @@
         <div class="text-gray-500 font-bold">
           <%= f.association :venue %>
         </div>
+        <div class="flex flex-row">
+          <div class="mr-4 pr-4">
+            <%= f.input :ilk, collection: Concert.ilks %>
+          </div>
+          <div>  
+            <%= f.input :access, collection: Concert.accesses %>
+          </div>
+        </div>
       </div>
-      <div class="col-span-1 text-xl ">
-        <%= f.input :ilk, collection: Concert.ilks %>
-        <%= f.input :access, collection: Concert.accesses %>
-        <%= f.button :submit %>
-        <div class="mt-2">
+      <div class="col-span-2">
+      </div>
+      <div class="col-span-4 flex flex-row items-center justify-center sm:justify-start">
+        <div>
+          <%= f.button :submit %>
+        </div>
+        <div>
           <%= link_to(
                 "Cancel",
                 concert_path(concert, inline: true),

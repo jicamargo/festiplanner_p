@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from "../contexts/venue_context"
 
 const Header = styled.span`
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-right: 15px;
   margon-left: 15px;
@@ -30,7 +30,8 @@ export const VenueHeader = (): React.ReactElement => {
 
   return (
     <div>
-      <Header>How many tickets would you like?:
+      <Header>
+        How many tickets would you like?:
         <span className="select ml-2">
           <select onChange={setTickectsOnChange}>
             {options(seatsPerRow)}

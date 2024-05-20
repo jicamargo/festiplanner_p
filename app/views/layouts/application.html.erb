@@ -17,14 +17,14 @@
   </head>
 
   <body>
-    <section class="py-12 px-6">
+    <section class="py-2 px-2 md:py-4 md:px-8">
       <%= render "layouts/nav" %>
       <div class="container mx-auto">
-        <div class="mt-6">
-          <p class="notice"><%= notice %></p>
-          <p class="alert"><%= alert %></p>
-          <%= yield %>
+        <div class="my-2">
+          <p class="notice text-center bg-green-100 px-4"><%= notice %></p>
+          <p class="alert text-center bg-red-100 px-4"><%= alert %></p>
         </div>
+        <%= yield %>
       </div>
     </section>
   </body>
