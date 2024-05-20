@@ -18,5 +18,3 @@ document.addEventListener("turbo:before-stream-render", (event) => {
     }
   }
 })
-
-console.log("application.js loaded");
