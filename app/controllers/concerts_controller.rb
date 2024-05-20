@@ -1,15 +1,17 @@
 class ConcertsController < ApplicationController
   before_action :set_concert, only: %i[show edit update destroy]
-
+  
   # GET /concerts or /concerts.json
   def index
-    @concerts = Concert.all
+    @query = params[:query]
+    @concerts = Concert.search(@query)
   end
 
   # GET /concerts/1 or /concerts/1.json
   def show
     if params[:inline]
-      render(@concert)
+      current_user.end_editing(@concert)
+      render(@concert, locals: {user: current_user})
     end
   end
 
@@ -20,6 +22,7 @@ class ConcertsController < ApplicationController
 
   # GET /concerts/1/edit
   def edit
+    current_user.start_editing(@concert)
   end
 
   # POST /concerts or /concerts.json
@@ -41,6 +44,8 @@ class ConcertsController < ApplicationController
   def update
     respond_to do |format|
       if @concert.update(concert_params)
+        current_user.end_editing(@concert)
+        format.turbo_stream {}
         format.html { render(@concert) }
         format.json { render :show, status: :ok, location: @concert }
       else
@@ -68,7 +73,9 @@ class ConcertsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_concert
-    @concert = Concert.includes(:tickets).find(params[:id])
+    # @concert = Concert.includes(:bands, :tickets).find(params[:id])
+    @concert = Concert.includes(:bands).find(params[:id])
+    # @concert = Concert.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

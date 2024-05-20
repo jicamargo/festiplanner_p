@@ -1,10 +1,14 @@
-<h1>Editing concert</h1>
+<h1 class="text-2xl font-bold w-auto text-center md:text-4xl">
+  Editing concert
+</h1>
 
-<%= render "form", concert: @concert %>
+<%= turbo_frame_tag(dom_id(@concert)) do %>
+  <%= render "form", concert: @concert %>
+<% end %>
 
 <br>
 
 <div>
-  <%= link_to "Show this concert", @concert %> |
-  <%= link_to "Back to concerts", concerts_path %>
+  <%= link_to("Back to concert", @concert, class: SimpleForm.button_class) %>
+  <%= link_to("Back to Schedule", root_path, class: SimpleForm.button_class) %>
 </div>

@@ -1,77 +1,45 @@
-<h1 class="text-4xl font-bold w-auto text-center"><%= @concert.name %></h1>
-<h2 class="text-2xl font-semibold">Ticket Info</h2>
-<h3 class="text-xl"><%= @concert.ilk %></h3>
-<h3 class="text-xl"><%= @concert.access %></h3>
-<h3 class="text-xl">
+<h1 class="text-2xl font-bold w-auto text-center md:text-4xl"><%= @concert.name %></h1>
+<h2 class="text-lg font-semibold md:text-2xl">Ticket Info</h2>
+<h3 class="text-lg md:text-xl">Ilk: &nbsp;<%= @concert.ilk %></h3>
+<h3 class="text-lg md:text-xl">Access: &nbsp;<%= @concert.access %></h3>
+<h3 class="text-lg md:text-xl">Venue: <%= @concert.venue.name %></h3>
+<h3 class="text-lg md:text-xl">
   Start Date: &nbsp;
   <%= @concert.start_time.by_example("Jan 02, 2006") %>
 </h3>
-<h3 class="text-xl">Venue: <%= @concert.venue.name %></h3>
-<h3 class="text-xl">Schedule:</h3>
 <% running_time = @concert.start_time %>
-<table class="table border border-black w-4/5">
+<table class="table border border-black rounded-lg w-full p-1">
+  <caption class="text-md font-semibold bg-slate-600 text-white p-0.5 md:text-xl ">
+    Schedule
+  </caption>
   <thead>
-    <tr>
-      <th>Time</th>
-      <th>Band</th>
-      <th>Genres</th>
+    <tr class="text-sm md:text-lg">
+      <th  class="border border-slate-600">Time</th>
+      <th  class="border border-slate-600">Band</th>
+      <th  class="border border-slate-600">Genres</th>
     </tr>
   </thead>
   <tbody>
     <% @concert.gigs.each do |gig| %>
-      <tr>
-        <td><%= running_time.by_example("03:04 PM") %></td>
-        <td><%= gig.band.name %></td>
-        <td><%= gig.band.genre_tags.split(",").join(", ") %></td>
+      <tr class="text-sm md:text-lg">
+        <td  class="border border-slate-600" ><%= running_time.by_example("03:04 PM") %></td>
+        <td  class="border border-slate-600" ><%= gig.band.name %></td>
+        <td  class="border border-slate-600" ><%= gig.band.genre_tags.split(",").join(", ")%></td> 
         <% running_time += (gig.duration_minutes * 60) %>
       </tr>
     <% end %>
   </tbody>
 </table>
-<h2 class="text-2xl font-semibold mt-12">Tickets</h2>
 <div class="concert">
-  <div class="header">
-    <span>Current Tickets Purchased: &nbsp;</span>
-    <span>0</span>
+  <div id="react-element"
+        data-row-count="<%= @concert.venue.rows %>"
+        data-seats-per-row="<%= @concert.venue.seats_per_row %>"
+        data-concert-id="<%= @concert.id %>%">
   </div>
-  <div class="header">
-    <span>Current Tickets Cost: &nbsp;</span>
-    <span>$0.00</span>
-  </div>
-  <div class="px-5 py-4 m-2 my-4 w-40 text-center text-white transition-colors duration-150 bg-gray-800 rounded-lg focus:shadow-outline hover:bg-black">
-    Clear Tickets
-  </div>
-  <div>
-    <span class="header">How many tickets would you like?</span>
-    <span class="select">
-      <select>
-        <%= @concert.venue.seats_per_row.times do |seat| %>
-          <option><%= seat + 1 %></option>
-        <% end %>
-      </select>
-    </span>
-  </div>
-  <table class="table">
-    <tbody>
-      <% @concert.venue.rows.times do |row| %>
-        <tr>
-          <% @concert.venue.seats_per_row.times do |seat| %>
-            <% ticket = @concert.find_ticket_at(row: row + 1, number: seat + 1) %>
-            <td>
-              <%= button_to(ticket_path(ticket.id), method: :patch) do %>
-                <div class="<%= color_for(ticket, current_user) %> p-4 m-2 border-black border-4 button hover:bg-blue-300 text-lg">
-                  <%= seat + 1 %>
-                </div>
-              <% end %>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
 </div>
-<div class="actions">
-  <%= link_to("Edit", edit_concert_path(@concert)) %>
-  |
-  <%= link_to("Back", concerts_path) %>
-</div>
+<% if current_user %>
+  <div class="actions mt-4 border-t border-slate-600 pt-4 flex justify-center md:justify-start">
+    <%= link_to("Edit concert", edit_concert_path(@concert), class: SimpleForm.button_class) %>
+    <%= link_to("Back to Schedule", root_path, class: SimpleForm.button_class) %>
+  </div>
+<% end %>

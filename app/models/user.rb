@@ -21,6 +21,20 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable
 
+  kredis_unique_list :concerts_being_edited, typed: :integer
+
+  def is_editing?(concert)
+    concerts_being_edited.elements.include?(concert.id)
+  end
+
+  def start_editing(concert)
+    concerts_being_edited.append(concert.id)
+  end
+
+  def end_editing(concert)
+    concerts_being_edited.remove(concert.id)
+  end
+
   def self.hoarder
     User.find_by(email: "thoarder@example.com")
   end

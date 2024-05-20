@@ -1,17 +1,13 @@
-#---
-# Excerpted from "Modern Front-End Development for Rails, Second Edition",
-# published by The Pragmatic Bookshelf.
-# Copyrights apply to this code. It may not be used to create training material,
-# courses, books, articles, and the like. Contact us if you are in doubt.
-# We make no guarantees that this code is fit for any purpose.
-# Visit https://pragprog.com/titles/nrclient2 for more book information.
-#---
 class TicketsController < ApplicationController
   before_action :set_ticket, only: %i[show edit update destroy]
 
   # GET /tickets or /tickets.json
   def index
-    @tickets = Ticket.all
+    @tickets = Ticket.data_for_concert(params[:concert_id])
+    respond_to do |format|
+      format.html
+      format.json { render(json: @tickets) }
+    end
   end
 
   # GET /tickets/1 or /tickets/1.json

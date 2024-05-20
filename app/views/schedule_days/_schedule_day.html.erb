@@ -1,8 +1,7 @@
-<section
+<section id="day-body-<%= schedule_day.day_string %>"
   data-controller="css"
   data-css-css-class="hidden"
-  data-css-status.value="false"
-  >
+  data-css-status.value="false">
   <h2 class="text-3xl font-bold">
     <%= schedule_day.day.by_example("Monday, January 2, 2006") %>
     <span class="<%= SimpleForm.button_class %> py-1 text-xl font-semibold"
@@ -18,7 +17,7 @@
   <% if show %>
     <section data-css-target="elementToChange">
       <% schedule_day.concerts.sort_by(&:start_time).each do |concert| %>
-        <%= render(concert) %>
+        <%= render(concert, user: current_user) %>
       <% end %>
     </section>
   <% end %>

@@ -1,8 +1,7 @@
-
 class FavoritesController < ApplicationController
   def index
     if params[:count_only]
-      render(partial: "favorites/count")
+      render(partial: "favorites/count")     
     end
   end
 
@@ -12,7 +11,7 @@ class FavoritesController < ApplicationController
       concert_id: params[:concert_id]
     )
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream { head(:ok) }
     end
   end
 
@@ -20,7 +19,7 @@ class FavoritesController < ApplicationController
     @favorite = Favorite.find(params[:id])
     @favorite.destroy
     respond_to do |format|
-      format.turbo_stream
+      format.turbo_stream { head(:ok) }
     end
   end
 
