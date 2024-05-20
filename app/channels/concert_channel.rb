@@ -1,7 +1,6 @@
 class ConcertChannel < ApplicationCable::Channel
   def subscribed
     stream_from("concert_#{params[:concertId]}")
-    puts ">>>>>>>>>>>>>>>>> concert_channel.rb >>>>>>>>>>>>>>>>> subscribed to concert_#{params[:concertId]} ############################"
   end
 
   def unsubscribed
@@ -9,14 +8,7 @@ class ConcertChannel < ApplicationCable::Channel
   end
 
   def added_to_cart(data)
-    
-    puts ">>>>>>>>>>>>>>>>> concert_channel.rb >>>>>>>>>>>>>>>>> added_to_cart"
-    puts "data: #{data}"
-    puts "data[userId]: #{data["userId"]}"
-    puts "==============================================================================="
-
     cart = ShoppingCart.find_or_create_by(user_id: data["userId"])
-    puts "cart: #{cart.inspect}"
     cart.add_tickets(
       concert_id: data["concertId"],
       row: data["row"],
@@ -24,11 +16,7 @@ class ConcertChannel < ApplicationCable::Channel
       tickets_to_buy_count: data["ticketsToBuyCount"],
       status: data["status"]
     )
-    result = Ticket.grouped_for_concert(data["concertId"])
-    puts ">>>>>>>>>>>>>>>>> concert_channel.rb >>>>>>>>>>>>>>>>> added_to_cart" 
-    puts "broadcasting result for concert_#{data["concertId"]}" 
-    puts "==============================================================================="
-    # ActionCable.server.broadcast("concert_#{data["concertId"]}", result)
+    # result = Ticket.grouped_for_concert(data["concertId"])
 
     concert = Concert.find(data["concertId"])
     ActionCable.server.broadcast(
@@ -42,8 +30,6 @@ class ConcertChannel < ApplicationCable::Channel
         ]
       }
     )
-    puts ">>>>>>>>>>>>>>>>> concert_channel.rb >>>>>>>>>>>>>>>>>"
-    puts "broadcasting >>>>> concert.tickets.unsold.count: #{concert.tickets.unsold.count}"
   end
 
   def removed_from_cart(data)

@@ -34,15 +34,15 @@ ActiveRecord::Base.transaction do
   User.delete_all
 
   User.create!(
-    full_name: "Awesome Reader",
-    email: "areader@example.com",
-    password: "awesome"
+    full_name: "John Doe",
+    email: "johndoe@example.com",
+    password: "johndoe"
   )
 
   User.create!(
-    full_name: "Ticket Hoarder",
-    email: "thoarder@example.com",
-    password: "hoarder"
+    full_name: "Peter Parker",
+    email: "peterparker@example.com",
+    password: "peterparker"
   )
 
   venues = Array.new(10).map do

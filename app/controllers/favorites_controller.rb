@@ -19,7 +19,6 @@ class FavoritesController < ApplicationController
     @favorite = Favorite.find(params[:id])
     @favorite.destroy
     respond_to do |format|
-      puts "favorites.destroy >>>>>>>>> voy a renderizar el turbo_stream >>>>> #{format.inspect}"
       format.turbo_stream { head(:ok) }
     end
   end

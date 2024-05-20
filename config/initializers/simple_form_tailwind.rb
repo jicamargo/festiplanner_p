@@ -5,7 +5,6 @@
 SimpleForm.setup do |config|
   # Default class for buttons
   config.button_class = "h-10 px-5 py-1 m-2 text-white transition-colors duration-150 bg-gray-800 rounded-lg focus:shadow-outline hover:bg-white hover:text-black border-black border"
-  config.button_class_small = "h-6 px-3 py-1 m-1 text-white transition-colors duration-150 bg-gray-800 rounded-md focus:shadow-outline hover:bg-white hover:text-black border-black border"
   # Define the default class of the input wrapper of the boolean input.
   config.boolean_label_class = ""
 

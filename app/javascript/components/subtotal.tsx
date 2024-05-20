@@ -21,7 +21,7 @@ const Subtotal = (): React.ReactElement => {
     dispatch(clearCart())
   }
   return (
-    <div className="flex border border-slate-400 rounded-lg w-full mx-auto mt-2 md:w-4/5">
+    <div className="flex border border-slate-400 rounded-lg w-full mx-auto mt-2 md:w-4/6">
       <div className="flex flex-col grow justify-center mr-4">
         <Header>
           <span>Tickets Purchased: &nbsp;</span>
