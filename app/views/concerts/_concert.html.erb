@@ -44,7 +44,7 @@
             <% if user %>
               <%= link_to(
                     "Edit",
-                    edit_concert_path(concert),
+                    edit_concert_path(concert, inline: :true),
                     class: SimpleForm.button_class
                   ) %>
               <% if user.favorite(concert) %>

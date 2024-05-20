@@ -29,7 +29,7 @@ export const VenueHeader = (): React.ReactElement => {
   }
 
   return (
-    <div>
+    <div className="flex border border-t-0 border-x-2border-b-2 border-slate-400 px-4 py-1 rounded-lg w-full mx-auto md:w-4/6">
       <Header>
         How many tickets would you like?:
         <span className="select ml-2">
