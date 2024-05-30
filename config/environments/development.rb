@@ -65,6 +65,16 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+ # Uncomment if you wish to allow Action Cable access from any origin.
+ # config.action_cable.disable_request_forgery_protection = true
+
+ # config de ActionCable para que funcione en produccion o development en el servidor web
+ # Las lineas comentadasson para informar lo que no es necesario cambiar
+ #  config.action_cable.mount_path = "/cable"
+ #  config.web_console.allowed_ips = "161.35.118.210"
+ #  config.action_cable.url = 'ws://161.35.118.210/cable'
+ config.action_cable.allowed_request_origins = [ 'http://161.35.118.210', /http:\/\/161.35.118.210/ ]
+
   # devise
   config.action_mailer.default_url_options = {host: "localhost", port: 3000}
 
