@@ -82,7 +82,7 @@ To run FestiPlanner locally, follow these simple steps:
 
 1. Clone the repository:
 
-`git clone https://github.com/jicamargo/festiplanner.git`
+`git clone https://github.com/jicamargo/festiplanner_p.git`
 
 2. Install the dependencies:
 
@@ -137,7 +137,7 @@ Explore the event schedules, manage venues, and track ticket sales. Log in as an
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/jicamargo/festiplanner/issues).
+Feel free to check the [issues page](https://github.com/jicamargo/festiplanner_p/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
