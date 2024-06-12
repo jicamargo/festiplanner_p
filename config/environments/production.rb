@@ -22,7 +22,9 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  #  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  # JIC: Habilitado para servir archivos estáticos (El servidor de producción NGINX de Digital Ocean no esta configurado para servir archivos estáticos)
+  config.public_file_server.enabled = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -36,8 +38,8 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  # config.action_cable.url = "wss://example.com/cable"
-  # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
+  # config.action_cable.url = 'ws://161.35.118.210/cable'
+    config.action_cable.allowed_request_origins = [ 'http://161.35.118.210', /http:\/\/161.35.118.210/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
