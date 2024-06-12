@@ -82,7 +82,7 @@ To run FestiPlanner locally, follow these simple steps:
 
 1. Clone the repository:
 
-`git clone <URL_DEL_NUEVO_REPOSITORIO>`
+`git clone https://github.com/jicamargo/festiplanner.git`
 
 2. Install the dependencies:
 
